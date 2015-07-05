@@ -2,8 +2,8 @@ Kdyby/RequestStack
 ======
 
 [![Build Status](https://travis-ci.org/Kdyby/RequestStack.svg?branch=master)](https://travis-ci.org/Kdyby/RequestStack)
-[![Downloads this Month](https://img.shields.io/packagist/dm/kdyby/RequestStack.svg)](https://packagist.org/packages/kdyby/RequestStack)
-[![Latest stable](https://img.shields.io/packagist/v/kdyby/RequestStack.svg)](https://packagist.org/packages/kdyby/RequestStack)
+[![Downloads this Month](https://img.shields.io/packagist/dm/kdyby/request-stack.svg)](https://packagist.org/packages/kdyby/request-stack)
+[![Latest stable](https://img.shields.io/packagist/v/kdyby/request-stack.svg)](https://packagist.org/packages/kdyby/request-stack)
 
 
 Requirements
