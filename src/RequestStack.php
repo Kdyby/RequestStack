@@ -25,11 +25,17 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	private $requests = [];
 
+	/**
+	 * @var Nette\Http\IRequest
+	 */
+	private $current;
+
 
 
 	public function pushRequest(Nette\Http\IRequest $request)
 	{
 		$this->requests[] = $request;
+		$this->current = $request;
 	}
 
 
@@ -39,7 +45,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function getCurrentRequest()
 	{
-		return end($this->requests);
+		return $this->current;
 	}
 
 
@@ -49,7 +55,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function getUrl()
 	{
-		return $this->getCurrentRequest()->getUrl();
+		return $this->current->getUrl();
 	}
 
 
@@ -60,10 +66,10 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	public function getQuery($key = NULL, $default = NULL)
 	{
 		if (func_num_args() === 0) {
-			return $this->getCurrentRequest()->getQuery();
+			return $this->current->getQuery();
 		}
 
-		return $this->getCurrentRequest()->getQuery($key, $default);
+		return $this->current->getQuery($key, $default);
 	}
 
 
@@ -74,10 +80,10 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	public function getPost($key = NULL, $default = NULL)
 	{
 		if (func_num_args() === 0) {
-			return $this->getCurrentRequest()->getPost();
+			return $this->current->getPost();
 		}
 
-		return $this->getCurrentRequest()->getPost($key, $default);
+		return $this->current->getPost($key, $default);
 	}
 
 
@@ -87,7 +93,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function getFile($key)
 	{
-		return $this->getCurrentRequest()->getFile($key);
+		return $this->current->getFile($key);
 	}
 
 
@@ -97,7 +103,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function getFiles()
 	{
-		return $this->getCurrentRequest()->getFiles();
+		return $this->current->getFiles();
 	}
 
 
@@ -107,7 +113,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function getCookie($key, $default = NULL)
 	{
-		return $this->getCurrentRequest()->getCookie($key, $default);
+		return $this->current->getCookie($key, $default);
 	}
 
 
@@ -117,7 +123,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function getCookies()
 	{
-		return $this->getCurrentRequest()->getCookies();
+		return $this->current->getCookies();
 	}
 
 
@@ -127,7 +133,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function getMethod()
 	{
-		return $this->getCurrentRequest()->getMethod();
+		return $this->current->getMethod();
 	}
 
 
@@ -137,7 +143,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function isMethod($method)
 	{
-		return $this->getCurrentRequest()->isMethod($method);
+		return $this->current->isMethod($method);
 	}
 
 
@@ -147,7 +153,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function getHeader($header, $default = NULL)
 	{
-		return $this->getCurrentRequest()->getHeader($header, $default);
+		return $this->current->getHeader($header, $default);
 	}
 
 
@@ -157,7 +163,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function getHeaders()
 	{
-		return $this->getCurrentRequest()->getHeaders();
+		return $this->current->getHeaders();
 	}
 
 
@@ -167,7 +173,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function isSecured()
 	{
-		return $this->getCurrentRequest()->isSecured();
+		return $this->current->isSecured();
 	}
 
 
@@ -177,7 +183,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function isAjax()
 	{
-		return $this->getCurrentRequest()->isAjax();
+		return $this->current->isAjax();
 	}
 
 
@@ -187,7 +193,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function getRemoteAddress()
 	{
-		return $this->getCurrentRequest()->getRemoteAddress();
+		return $this->current->getRemoteAddress();
 	}
 
 
@@ -197,7 +203,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function getRemoteHost()
 	{
-		return $this->getCurrentRequest()->getRemoteHost();
+		return $this->current->getRemoteHost();
 	}
 
 
@@ -207,7 +213,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function getRawBody()
 	{
-		return $this->getCurrentRequest()->getRawBody();
+		return $this->current->getRawBody();
 	}
 
 
@@ -220,7 +226,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function detectLanguage(array $langs)
 	{
-		$this->getCurrentRequest()->detectLanguage($langs);
+		$this->current->detectLanguage($langs);
 	}
 
 
