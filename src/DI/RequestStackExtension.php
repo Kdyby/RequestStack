@@ -36,7 +36,7 @@ class RequestStackExtension extends Nette\DI\CompilerExtension
 		$originalRequest
 			->setClass('Kdyby\RequestStack\RequestStack')
 			->setFactory('Kdyby\RequestStack\RequestStack')
-			->addSetup('appendRequest', [$this->prefix('@firstRequest')]);
+			->addSetup('pushRequest', [$this->prefix('@firstRequest')]);
 	}
 
 
