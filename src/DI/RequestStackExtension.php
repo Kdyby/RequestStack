@@ -49,4 +49,3 @@ class RequestStackExtension extends Nette\DI\CompilerExtension
 	}
 
 }
-
