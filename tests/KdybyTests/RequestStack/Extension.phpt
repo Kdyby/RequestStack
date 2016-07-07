@@ -32,7 +32,7 @@ class ExtensionTest extends Tester\TestCase
 		$config = new Nette\Configurator();
 		$config->setTempDirectory(TEMP_DIR);
 		Kdyby\RequestStack\DI\RequestStackExtension::register($config);
-		$config->addConfig(__DIR__ . '/../nette-reset.neon', !isset($config->defaultExtensions['nette']) ? 'v23' : 'v22');
+		$config->addConfig(__DIR__ . '/../nette-reset.' . (!isset($config->defaultExtensions['nette']) ? 'v23' : 'v22') . '.neon');
 
 		if ($configName !== NULL) {
 			$config->addConfig(__DIR__ . '/config/' . $configName . '.neon');
