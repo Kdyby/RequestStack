@@ -37,13 +37,6 @@ class RequestStackExtension extends Nette\DI\CompilerExtension
 			->setClass('Kdyby\RequestStack\RequestStack')
 			->setFactory('Kdyby\RequestStack\RequestStack')
 			->addSetup('pushRequest', [$this->prefix('@firstRequest')]);
-
-		if (class_exists('Nette\Application\LinkGenerator') && ($linkGenerator = $builder->getByType('Nette\Application\LinkGenerator'))) {
-			$builder->getDefinition($linkGenerator)
-				->setArguments([
-					1 => new Nette\DI\Statement('@Nette\Http\IRequest::getUrl'),
-				]);
-		}
 	}
 
 

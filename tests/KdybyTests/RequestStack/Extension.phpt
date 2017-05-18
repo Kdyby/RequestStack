@@ -47,6 +47,7 @@ class ExtensionTest extends Tester\TestCase
 	{
 		$dic = $this->createContainer();
 		Assert::true($dic->getByType('Nette\Http\IRequest') instanceof Kdyby\RequestStack\RequestStack);
+		Assert::true($dic->getByType('Nette\Application\LinkGenerator') instanceof Nette\Application\LinkGenerator);
 	}
 
 
