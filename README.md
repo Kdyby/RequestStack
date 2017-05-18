@@ -7,7 +7,7 @@ Kdyby/RequestStack
 [![Coverage Status](https://coveralls.io/repos/github/Kdyby/RequestStack/badge.svg?branch=master)](https://coveralls.io/github/Kdyby/RequestStack?branch=master)
 
 This package turns the `Nette\Http\IRequest` value object into a container of value object.
-You can now safely dependent on the service and change the instance, for example if you were to handle more requests in one instance of application. 
+You can now safely dependent on the service and change the instance, for example if you were to handle more requests in one instance of application.
 
 Installation
 ------------
