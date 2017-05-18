@@ -41,7 +41,7 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 
 
 	/**
-	 * @return Nette\Http\Request
+	 * @return Nette\Http\IRequest
 	 */
 	public function getCurrentRequest()
 	{
