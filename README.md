@@ -6,15 +6,8 @@ Kdyby/RequestStack
 [![Latest stable](https://img.shields.io/packagist/v/kdyby/request-stack.svg)](https://packagist.org/packages/kdyby/request-stack)
 [![Coverage Status](https://coveralls.io/repos/github/Kdyby/RequestStack/badge.svg?branch=master)](https://coveralls.io/github/Kdyby/RequestStack?branch=master)
 
-
-
-Requirements
-------------
-
-Kdyby/RequestStack requires PHP 5.4 or higher.
-
-- [Nette Framework](https://github.com/nette/nette)
-
+This package turns the `Nette\Http\IRequest` value object into a container of value object.
+You can now safely dependent on the service and change the instance, for example if you were to handle more requests in one instance of application. 
 
 Installation
 ------------
@@ -23,12 +16,10 @@ Installation
 $ composer require kdyby/request-stack
 ```
 
-
 Documentation
 ------------
 
 Learn more in the [documentation](https://github.com/Kdyby/RequestStack/blob/master/docs/en/index.md).
-
 
 -----
 
