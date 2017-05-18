@@ -226,7 +226,9 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	 */
 	public function detectLanguage(array $langs)
 	{
-		$this->current->detectLanguage($langs);
+		if ($this->current instanceof Nette\Http\Request) {
+			return $this->current->detectLanguage($langs);
+		}
 	}
 
 
