@@ -26,16 +26,16 @@ class RequestStackExtension extends Nette\DI\CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 
-		$originalRequest = $builder->getDefinition(($builder->getByType('Nette\Http\IRequest') ?: 'httpRequest'));
+		$originalRequest = $builder->getDefinition($builder->getByType(Nette\Http\IRequest::class));
 
 		$builder->addDefinition($this->prefix('firstRequest'))
-			->setClass('Nette\Http\IRequest')
+			->setClass(Nette\Http\IRequest::class)
 			->setFactory($originalRequest->getFactory())
 			->setAutowired(FALSE);
 
 		$originalRequest
-			->setClass('Kdyby\RequestStack\RequestStack')
-			->setFactory('Kdyby\RequestStack\RequestStack')
+			->setClass(Kdyby\RequestStack\RequestStack::class)
+			->setFactory(Kdyby\RequestStack\RequestStack::class)
 			->addSetup('pushRequest', [$this->prefix('@firstRequest')]);
 	}
 
