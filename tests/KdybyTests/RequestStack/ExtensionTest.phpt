@@ -6,22 +6,16 @@
 
 namespace KdybyTests\RequestStack;
 
-use Kdyby;
-use KdybyTests;
-use Nette;
-use Tester;
+use Kdyby\RequestStack\DI\RequestStackExtension;
+use Kdyby\RequestStack\RequestStack;
+use Nette\Application\LinkGenerator;
+use Nette\Configurator;
+use Nette\Http\IRequest;
 use Tester\Assert;
-
-
 
 require_once __DIR__ . '/../bootstrap.php';
 
-
-
-/**
- * @author Filip Procházka <filip@prochazka.su>
- */
-class ExtensionTest extends Tester\TestCase
+class ExtensionTest extends \Tester\TestCase
 {
 
 	/**
@@ -29,9 +23,9 @@ class ExtensionTest extends Tester\TestCase
 	 */
 	protected function createContainer($configName = NULL)
 	{
-		$config = new Nette\Configurator();
+		$config = new Configurator();
 		$config->setTempDirectory(TEMP_DIR);
-		Kdyby\RequestStack\DI\RequestStackExtension::register($config);
+		RequestStackExtension::register($config);
 		$config->addConfig(__DIR__ . '/../nette-reset.neon');
 
 		if ($configName !== NULL) {
@@ -41,15 +35,12 @@ class ExtensionTest extends Tester\TestCase
 		return $config->createContainer();
 	}
 
-
-
 	public function testFunctional()
 	{
 		$dic = $this->createContainer();
-		Assert::true($dic->getByType(Nette\Http\IRequest::class) instanceof Kdyby\RequestStack\RequestStack);
-		Assert::true($dic->getByType(Nette\Application\LinkGenerator::class) instanceof Nette\Application\LinkGenerator);
+		Assert::true($dic->getByType(IRequest::class) instanceof RequestStack);
+		Assert::true($dic->getByType(LinkGenerator::class) instanceof LinkGenerator);
 	}
-
 
 }
 

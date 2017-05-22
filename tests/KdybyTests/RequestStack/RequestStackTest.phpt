@@ -6,23 +6,16 @@
 
 namespace KdybyTests\RequestStack;
 
-use Kdyby;
 use Kdyby\RequestStack\RequestStack;
-use KdybyTests;
-use Nette;
+use Nette\Http\FileUpload;
+use Nette\Http\Request as HttpRequest;
 use Nette\Http\Url;
 use Nette\Http\UrlScript;
-use Tester;
 use Tester\Assert;
 
 require_once __DIR__ . '/../bootstrap.php';
 
-
-
-/**
- * @author Filip Procházka <filip@prochazka.su>
- */
-class RequestStackTest extends Tester\TestCase
+class RequestStackTest extends \Tester\TestCase
 {
 
 	public function testPushAndPop()
@@ -31,11 +24,11 @@ class RequestStackTest extends Tester\TestCase
 
 		$url = new UrlScript('https://www.kdyby.org/');
 
-		$request1 = new Nette\Http\Request($url);
+		$request1 = new HttpRequest($url);
 		$stack->pushRequest($request1);
 		Assert::same($request1, $stack->getCurrentRequest());
 
-		$request2 = new Nette\Http\Request($url);
+		$request2 = new HttpRequest($url);
 		$stack->pushRequest($request2);
 		Assert::same($request2, $stack->getCurrentRequest());
 
@@ -81,11 +74,11 @@ class RequestStackTest extends Tester\TestCase
 	{
 		$stack = new RequestStack();
 
-		$httpRequest = new Nette\Http\Request(
+		$httpRequest = new HttpRequest(
 			new UrlScript('https://www.kdyby.org/?hello=no'),
 			NULL,
 			['foo' => 'foo'],
-			['f' => $f = new Nette\Http\FileUpload([])],
+			['f' => $f = new FileUpload([])],
 			['c' => 'C'],
 			['Accept-Language' => 'en', 'X-Requested-With' => 'XMLHttpRequest', 'Referer' => 'https://www.example.com'],
 			'GET',

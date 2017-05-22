@@ -19,7 +19,8 @@
 	"require": {
 		"php": "^5.6 || ^7.0",
 		"nette/di": "^2.4@dev",
-		"nette/http": "^2.4@dev"
+		"nette/http": "^2.4@dev",
+		"kdyby/strict-objects": "^1.0"
 	},
 	"require-dev": {
 		"nette/application": "^2.4@dev",
@@ -33,7 +34,9 @@
 		}
 	},
 	"autoload-dev": {
-		"classmap": ["tests/KdybyTests/RequestStack"]
+		"psr-4": {
+			"KdybyTests\\": "tests/KdybyTests/"
+		}
 	},
 	"extra": {
 		"branch-alias": {

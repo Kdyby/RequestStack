@@ -8,40 +8,33 @@
 
 namespace Kdyby\RequestStack;
 
-use Kdyby;
-use Nette;
+use Nette\Http\IRequest;
+use Nette\Http\Request as HttpRequest;
 use Nette\Http\Url;
 
-
-
-/**
- * @author Filip Procházka <filip@prochazka.su>
- */
-class RequestStack extends Nette\Object implements Nette\Http\IRequest
+class RequestStack implements \Nette\Http\IRequest
 {
 
+	use \Kdyby\StrictObjects\Scream;
+
 	/**
-	 * @var array|Nette\Http\IRequest[]
+	 * @var array|\Nette\Http\IRequest[]
 	 */
 	private $requests = [];
 
 	/**
-	 * @var Nette\Http\IRequest|NULL
+	 * @var \Nette\Http\IRequest|NULL
 	 */
 	private $current;
 
-
-
-	public function pushRequest(Nette\Http\IRequest $request)
+	public function pushRequest(IRequest $request)
 	{
 		$this->requests[] = $request;
 		$this->current = $request;
 	}
 
-
-
 	/**
-	 * @return Nette\Http\IRequest|null
+	 * @return \Nette\Http\IRequest|null
 	 */
 	public function popRequest()
 	{
@@ -55,17 +48,13 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 		return $head;
 	}
 
-
-
 	/**
-	 * @return Nette\Http\IRequest|NULL
+	 * @return \Nette\Http\IRequest|NULL
 	 */
 	public function getCurrentRequest()
 	{
 		return $this->current;
 	}
-
-
 
 	/**
 	 * @inheritdoc
@@ -74,8 +63,6 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	{
 		return $this->current !== NULL ? $this->current->getUrl() : NULL;
 	}
-
-
 
 	/**
 	 * @inheritdoc
@@ -89,8 +76,6 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 		return $this->current !== NULL ? $this->current->getQuery($key, $default) : NULL;
 	}
 
-
-
 	/**
 	 * @inheritdoc
 	 */
@@ -103,8 +88,6 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 		return $this->current !== NULL ? $this->current->getPost($key, $default) : NULL;
 	}
 
-
-
 	/**
 	 * @inheritdoc
 	 */
@@ -112,8 +95,6 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	{
 		return $this->current !== NULL ? $this->current->getFile($key) : NULL;
 	}
-
-
 
 	/**
 	 * @inheritdoc
@@ -123,8 +104,6 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 		return $this->current !== NULL ? $this->current->getFiles() : [];
 	}
 
-
-
 	/**
 	 * @inheritdoc
 	 */
@@ -132,8 +111,6 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	{
 		return $this->current !== NULL ? $this->current->getCookie($key, $default) : NULL;
 	}
-
-
 
 	/**
 	 * @inheritdoc
@@ -143,8 +120,6 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 		return $this->current !== NULL ? $this->current->getCookies() : [];
 	}
 
-
-
 	/**
 	 * @inheritdoc
 	 */
@@ -152,8 +127,6 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	{
 		return $this->current !== NULL ? $this->current->getMethod() : NULL;
 	}
-
-
 
 	/**
 	 * @inheritdoc
@@ -163,8 +136,6 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 		return $this->current !== NULL ? $this->current->isMethod($method) : FALSE;
 	}
 
-
-
 	/**
 	 * @inheritdoc
 	 */
@@ -172,8 +143,6 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	{
 		return $this->current !== NULL ? $this->current->getHeader($header, $default) : NULL;
 	}
-
-
 
 	/**
 	 * @inheritdoc
@@ -183,8 +152,6 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 		return $this->current !== NULL ? $this->current->getHeaders() : [];
 	}
 
-
-
 	/**
 	 * @inheritdoc
 	 */
@@ -192,8 +159,6 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	{
 		return $this->current !== NULL ? $this->current->isSecured() : FALSE;
 	}
-
-
 
 	/**
 	 * @inheritdoc
@@ -203,8 +168,6 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 		return $this->current !== NULL ? $this->current->isAjax() : FALSE;
 	}
 
-
-
 	/**
 	 * @inheritdoc
 	 */
@@ -212,8 +175,6 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 	{
 		return $this->current !== NULL ? $this->current->getRemoteAddress() : NULL;
 	}
-
-
 
 	/**
 	 * @inheritdoc
@@ -223,8 +184,6 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 		return $this->current !== NULL ? $this->current->getRemoteHost() : NULL;
 	}
 
-
-
 	/**
 	 * @inheritdoc
 	 */
@@ -233,25 +192,21 @@ class RequestStack extends Nette\Object implements Nette\Http\IRequest
 		return $this->current !== NULL ? $this->current->getRawBody() : NULL;
 	}
 
-
-
 	/**
 	 * Parse Accept-Language header and returns preferred language.
 	 *
-	 * @param  string[] supported languages
+	 * @param string[] $langs supported languages
 	 * @return string|NULL
 	 */
 	public function detectLanguage(array $langs)
 	{
-		return $this->current instanceof Nette\Http\Request
+		return $this->current instanceof HttpRequest
 			? $this->current->detectLanguage($langs)
 			: NULL;
 	}
 
-
-
 	/**
-	 * @return Url|NULL
+	 * @return \Nette\Http\Url|NULL
 	 */
 	public function getReferer()
 	{

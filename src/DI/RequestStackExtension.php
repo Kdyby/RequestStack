@@ -10,40 +10,36 @@
 
 namespace Kdyby\RequestStack\DI;
 
-use Kdyby;
-use Nette;
-use Nette\PhpGenerator as Code;
+use Kdyby\RequestStack\RequestStack;
+use Nette\Configurator;
+use Nette\DI\Compiler;
+use Nette\Http\IRequest;
 
-
-
-/**
- * @author Filip Procházka <filip@prochazka.su>
- */
-class RequestStackExtension extends Nette\DI\CompilerExtension
+class RequestStackExtension extends \Nette\DI\CompilerExtension
 {
+
+	use \Kdyby\StrictObjects\Scream;
 
 	public function beforeCompile()
 	{
 		$builder = $this->getContainerBuilder();
 
-		$originalRequest = $builder->getDefinition($builder->getByType(Nette\Http\IRequest::class));
+		$originalRequest = $builder->getDefinition($builder->getByType(IRequest::class));
 
 		$builder->addDefinition($this->prefix('firstRequest'))
-			->setClass(Nette\Http\IRequest::class)
+			->setClass(IRequest::class)
 			->setFactory($originalRequest->getFactory())
 			->setAutowired(FALSE);
 
 		$originalRequest
-			->setClass(Kdyby\RequestStack\RequestStack::class)
-			->setFactory(Kdyby\RequestStack\RequestStack::class)
+			->setClass(RequestStack::class)
+			->setFactory(RequestStack::class)
 			->addSetup('pushRequest', [$this->prefix('@firstRequest')]);
 	}
 
-
-
-	public static function register(Nette\Configurator $configurator)
+	public static function register(Configurator $configurator)
 	{
-		$configurator->onCompile[] = function ($config, Nette\DI\Compiler $compiler) {
+		$configurator->onCompile[] = function ($config, Compiler $compiler) {
 			$compiler->addExtension('requestStack', new RequestStackExtension());
 		};
 	}
